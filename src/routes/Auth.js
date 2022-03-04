@@ -8,7 +8,7 @@ const Auth = () => {
     const [error, setError] = useState("");
 
     const onChange = (event) => {
-        console.log(event.target.name);
+        // console.log(event.target.name);
         const {
             target: {name, value},
         } = event;
@@ -44,6 +44,7 @@ const Auth = () => {
             target: {name},
         } = event;
         let provider;
+        // console.log(name);
         if(name === "google") {
             provider= new firebaseInstance.auth.GoogleAuthProvider();
         }else if(name === "github"){
