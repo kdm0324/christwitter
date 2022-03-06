@@ -4,16 +4,17 @@ import Home from "routes/Home";
 import Navigation from "./Navigation";
 import Profile from "routes/Profile";
 
-const AppRouter = ({ isLoggedIn }) => {
+const AppRouter = ({ isLoggedIn, userObj }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
-      <Routes>/*스위치문을 대신해서 Routes를 쓴다 */
+      <Routes>
+        /*스위치문을 대신해서 Routes를 쓴다 */
         {isLoggedIn ? (
           <>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/profile" element={<Profile />}></Route>
-          </>/*조건절 안에 Route 두개를 쓰기 위에 묶어준다. */
+            <Route exact path="/" element={<Home userObj={userObj} />}></Route>
+            <Route exact path="/profile" element={<Profile />}></Route>
+          </> /*조건절 안에 Route 두개를 쓰기 위에 묶어준다. */
         ) : (
           <Route exact path="/" element={<Auth />}></Route>
         )}
