@@ -3,7 +3,7 @@ import { dbService } from "fbase";
 import Christweet from "components/Chirstweet";
 
 const Home = ({ userObj }) => {
-  console.log(userObj);
+  //console.log(userObj);
   const [christweet, setChristweet] = useState("");
   const [christweets, setChristweets] = useState([]);
 
@@ -19,11 +19,12 @@ const Home = ({ userObj }) => {
 
   useEffect(() => {
     // getChristweets();실시간 데이터베이스를 사용하기 위해 주석 처리함.
-    dbService.collection("christweets").onSnapshot((snapshot) => {
+    dbService.collection("christweets").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
       const newArray = snapshot.docs.map((document) => ({
-        ...document.data(),
         id: document.id,
+        ...document.data(),
       }));
+      console.log(newArray);
       setChristweets(newArray);
     });
   }, []);

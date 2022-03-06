@@ -33,7 +33,7 @@ const Auth = () => {
         //login
         data = await authService.signInWithEmailAndPassword(email, password);
       }
-      console.log(data);
+    //   console.log(data);
     } catch (error) {
       console.log(error);
       setError(error.message);
