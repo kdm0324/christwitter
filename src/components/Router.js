@@ -13,7 +13,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
         {isLoggedIn ? (
           <>
             <Route exact path="/" element={<Home userObj={userObj} />}></Route>
-            <Route exact path="/profile" element={<Profile />}></Route>
+            <Route exact path="/profile" element={<Profile userObj={userObj} />}></Route>
           </> /*조건절 안에 Route 두개를 쓰기 위에 묶어준다. */
         ) : (
           <Route exact path="/" element={<Auth />}></Route>
