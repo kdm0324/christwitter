@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { dbService, storageService } from "fbase";
 import Christweet from "components/Chirstweet";
-import { v4 as uuidv4 } from "uuid"
+import { v4 as uuidv4 } from "uuid";
 
 const Home = ({ userObj }) => {
   //console.log(userObj);
@@ -21,31 +21,40 @@ const Home = ({ userObj }) => {
 
   useEffect(() => {
     // getChristweets();실시간 데이터베이스를 사용하기 위해 주석 처리함.
-    dbService.collection("christweets").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
-      const newArray = snapshot.docs.map((document) => ({
-        id: document.id,
-        ...document.data(),
-      }));
-      console.log(newArray);
-      setChristweets(newArray);
-    });
+    dbService
+      .collection("christweets")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const newArray = snapshot.docs.map((document) => ({
+          id: document.id,
+          ...document.data(),
+        }));
+        console.log(newArray);
+        setChristweets(newArray);
+      });
   }, []);
 
   //console.log(christweets);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // await dbService.collection("christweets").add({
-    //   text: christweet,
-    //   createdAt: Date.now(),
-    //   creatorId: userObj.uid,
-    // });
-    // setChristweet("");
-    const attachmentRef = storageService
-    .ref()
-    .child(`${userObj.uid}/${uuidv4()}`);
-    const response = await attachmentRef.putString(attachment, "data_url");
-    console.log(response);
+    let attachmentUrl = "";
+    if (attachment !== "") {
+      const attachmentRef = storageService
+        .ref()
+        .child(`${userObj.uid}/${uuidv4()}`);
+      const response = await attachmentRef.putString(attachment, "data_url");
+      // console.log(await response.ref.getDownloadURL());
+      attachmentUrl = await response.ref.getDownloadURL();
+    }
+    await dbService.collection("christweets").add({
+      text: christweet,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      attachmentUrl,
+    });
+    setChristweet("");
+    setAttachment("");
   };
 
   const onChange = (event) => {
@@ -59,21 +68,21 @@ const Home = ({ userObj }) => {
   const onFileChange = (event) => {
     //   console.log(event.target.files);
     const {
-        target: { files },
+      target: { files },
     } = event;
     const theFile = files[0];
     const reader = new FileReader();
     reader.onloadend = (finishedEvent) => {
-        // console.log(finishedEvent);
-        const {
-            currentTarget: { result },
-        } = finishedEvent;
-        setAttachment(result);
+      // console.log(finishedEvent);
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
     };
     reader.readAsDataURL(theFile);
   };
 
-  const onClearAttachment = ()=> setAttachment("");
+  const onClearAttachment = () => setAttachment("");
 
   return (
     <>
@@ -85,13 +94,13 @@ const Home = ({ userObj }) => {
           placeholder="What's on your mind?"
           maxLength={120}
         />
-        <input type="file" accept="image/*" onChange={onFileChange}/>
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="Christweet" />
         {attachment && (
-        <div>
+          <div>
             <img src={attachment} width="50px" height="50px" />
             <button onClick={onClearAttachment}>Clear</button>
-        </div>
+          </div>
         )}
       </form>
       <div>

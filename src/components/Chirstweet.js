@@ -1,4 +1,4 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import { useState } from "react";
 
 const Christweet = ({ christweetObj, isOwner }) => {
@@ -6,13 +6,16 @@ const Christweet = ({ christweetObj, isOwner }) => {
   const [newChristweet, setNewChristweet] = useState(christweetObj.text);
   const onDeleteClick = async () => {
     const ok = window.confirm("삭제하시겠습니까?");
-    console.log(ok);
+    // console.log(ok);
     if (ok) {
-      console.log(christweetObj.id);
+      //   console.log(christweetObj.id);
       const data = await dbService
         .doc(`christweets/${christweetObj.id}`)
         .delete();
-      console.log(data);
+      //   console.log(data);
+      if (christweetObj.attachmentUrl !== "") {
+        await storageService.refFromURL(christweetObj.attachmentUrl).delete();
+      }
     }
   };
 
@@ -26,9 +29,11 @@ const Christweet = ({ christweetObj, isOwner }) => {
   };
 
   const onSubmit = async (event) => {
-      event.preventDefault();
+    event.preventDefault();
     //   console.log(christweetObj.id, newChristweet);
-    await dbService.doc(`christweets/${christweetObj.id}`).update({ text: newChristweet });
+    await dbService
+      .doc(`christweets/${christweetObj.id}`)
+      .update({ text: newChristweet });
     setEditing(false);
   };
 
@@ -44,13 +49,24 @@ const Christweet = ({ christweetObj, isOwner }) => {
         </>
       ) : (
         <>
-          <h4>{christweetObj.text}</h4>
-          {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Christweet</button>
-              <button onClick={toggleEditing}>Edit Chirstweet</button>
-            </>
-          )}
+          <div>
+            <h4>{christweetObj.text}</h4>
+            {christweetObj.attachmentUrl && (
+              <img
+                src={christweetObj.attachmentUrl}
+                width="50px"
+                height="50px"
+              />
+            )}
+          </div>
+          <div>
+            {isOwner && (
+              <>
+                <button onClick={onDeleteClick}>Delete Christweet</button>
+                <button onClick={toggleEditing}>Edit Chirstweet</button>
+              </>
+            )}
+          </div>
         </>
       )}
     </div>
