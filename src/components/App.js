@@ -9,18 +9,37 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(user);
-        setUserObj(user);
+        // setIsLoggedIn(user);
+        setUserObj({
+          uid: user.uid,
+          displayName: user.displayName,
+          updateProfile: (args) => user.updateProfile(args),
+        });
       } else {
         setIsLoggedIn(false);
       }
       setInit(true);
     });
   }, []);
+
+  const refreshUser = () => {
+    // setUserObj(authService.currentUser);
+    const user = authService.currentUser;
+    setUserObj({
+      uid: user.uid,
+      displayName: user.displayName,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  };
+
   return (
     <>
       {init ? (
-        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+        <AppRouter
+          refreshUser={refreshUser}
+          isLoggedIn={Boolean(userObj)}
+          userObj={userObj}
+        />
       ) : (
         "initializing..."
       )}

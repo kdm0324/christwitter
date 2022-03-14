@@ -50,7 +50,9 @@ const Christweet = ({ christweetObj, isOwner }) => {
       ) : (
         <>
           <div>
-            <h4>{christweetObj.text} ({christweetObj.createdAt})</h4>
+            <h4>
+              {christweetObj.text} date : {christweetObj.createdAt}
+            </h4>
             {christweetObj.attachmentUrl && (
               <img
                 src={christweetObj.attachmentUrl}

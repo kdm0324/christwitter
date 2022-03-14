@@ -4,7 +4,7 @@ import Home from "routes/Home";
 import Navigation from "./Navigation";
 import Profile from "routes/Profile";
 
-const AppRouter = ({ isLoggedIn, userObj }) => {
+const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation userObj={userObj} />}
@@ -13,7 +13,11 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
         {isLoggedIn ? (
           <>
             <Route exact path="/" element={<Home userObj={userObj} />}></Route>
-            <Route exact path="/profile" element={<Profile userObj={userObj} />}></Route>
+            <Route
+              exact
+              path="/profile"
+              element={<Profile refreshUser={refreshUser} userObj={userObj} />}
+            ></Route>
           </> /*조건절 안에 Route 두개를 쓰기 위에 묶어준다. */
         ) : (
           <Route exact path="/" element={<Auth />}></Route>
