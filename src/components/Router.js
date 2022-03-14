@@ -7,7 +7,7 @@ import Profile from "routes/Profile";
 const AppRouter = ({ isLoggedIn, userObj }) => {
   return (
     <Router>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation userObj={userObj} />}
       <Routes>
         /*스위치문을 대신해서 Routes를 쓴다 */
         {isLoggedIn ? (
