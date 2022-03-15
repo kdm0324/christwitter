@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/christwitter.git/static/js/main.2196e029.js",
-    "index.html": "/christwitter.git/index.html",
-    "main.2196e029.js.map": "/christwitter.git/static/js/main.2196e029.js.map"
+    "main.js": "/christwitter/static/js/main.e903b93e.js",
+    "index.html": "/christwitter/index.html",
+    "main.e903b93e.js.map": "/christwitter/static/js/main.e903b93e.js.map"
   },
   "entrypoints": [
-    "static/js/main.2196e029.js"
+    "static/js/main.e903b93e.js"
   ]
 }
