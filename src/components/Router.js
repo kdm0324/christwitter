@@ -12,11 +12,38 @@ const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
         /*스위치문을 대신해서 Routes를 쓴다 */
         {isLoggedIn ? (
           <>
-            <Route exact path="/" element={<Home userObj={userObj} />}></Route>
+            <Route
+              exact
+              path="/"
+              element={
+                <div
+                  style={{
+                    maxWidth: 890,
+                    width: "100%",
+                    margin: "0 auto",
+                    marginTop: 80,
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Home userObj={userObj} />
+                </div>
+              }
+            ></Route>
             <Route
               exact
               path="/profile"
-              element={<Profile refreshUser={refreshUser} userObj={userObj} />}
+              element={                <div
+                style={{
+                  maxWidth: 890,
+                  width: "100%",
+                  margin: "0 auto",
+                  marginTop: 80,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              > <Profile refreshUser={refreshUser} userObj={userObj} />
+              </div>}
             ></Route>
           </> /*조건절 안에 Route 두개를 쓰기 위에 묶어준다. */
         ) : (

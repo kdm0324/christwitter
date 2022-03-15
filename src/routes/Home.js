@@ -21,9 +21,9 @@ const Home = ({ userObj }) => {
   }, []);
 
   return (
-    <>
+    <div className="container">
       <ChirstweetFactory userObj={userObj} />
-      <div>
+      <div style={{marginTop: 30}}>
         {christweets.map((christweet) => (
           <Christweet
             key={christweet.id}
@@ -32,7 +32,7 @@ const Home = ({ userObj }) => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
