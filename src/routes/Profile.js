@@ -78,7 +78,7 @@ const Profile = ({ userObj, refreshUser }) => {
       <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
         Log Out
       </span>
-      <div className="container" style={{ marginTop: 20 }}>
+      {/* <div className="container" style={{ marginTop: 20 }}>
         {myChristweets.map((christweet) => (
           <Christweet
             key={christweet.id}
@@ -86,7 +86,7 @@ const Profile = ({ userObj, refreshUser }) => {
             isOwner={christweet.creatorId === userObj.uid}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
