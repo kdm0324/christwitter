@@ -27,8 +27,11 @@ const Auth = () => {
         icon={faTwitter}
         color={"#04AAFF"}
         size="3x"
-        style={{ marginBottom: 30 }}
+        style={{ marginBottom: 10 }}
       />
+      <div style={{ marginBottom: 30 }}>
+        <span>Christion들의 Twitter!</span>
+      </div>
       <AuthForm />
       <div className="authBtns">
         <button onClick={onSocialClick} name="google" className="authBtn">
